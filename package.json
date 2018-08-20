@@ -1,0 +1,19 @@
+{
+  "name": "herois-api",
+  "version": "1.0.0",
+  "description": "API REST para controle de Banco de Dados contendo informações de heróis",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pedropadilha/herois-api.git"
+  },
+  "author": "Pedro Padilha",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pedropadilha/herois-api/issues"
+  },
+  "homepage": "https://github.com/pedropadilha/herois-api#readme"
+}
