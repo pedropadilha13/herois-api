@@ -28,7 +28,7 @@ router.get('/:id', function(req, res, next) {
 router.post('/', (req, res, next) => {
     var heroi = req.body;
     if (!heroi.nome || !heroi.nacionalidade) {
-        res.json({"error": "Fields 'nome' and 'nacionalidade' cannot be set to null!"});
+        res.json({error: "Fields 'nome' and 'nacionalidade' cannot be set to null!"});
     } else {
         var querystring = `INSERT INTO Heroi (nome, nacionalidade, data_nasc) VALUES ('${heroi.nome}', '${heroi.nacionalidade}', '${heroi.data_nasc}')`;
         Database.query(querystring, (error, results, fields) => {
@@ -44,9 +44,9 @@ router.post('/', (req, res, next) => {
 router.put('/', (req, res, next) => {
     var heroi = req.body;
     if (!heroi.id) {
-        res.status(400).json({"error": "Cannot update row without id"});
+        res.status(400).json({error: "Cannot update row without id"});
     } else if (!heroi.nome && !heroi.nacionalidade && heroi.nome !== "" && heroi.nacionalidade !== "") {
-        res.status(400).json({"error": "Invalid values for nome and/or nacionalidade"});
+        res.status(400).json({error: "Invalid values for nome and/or nacionalidade"});
     } else {
         var querystring = buildQS(heroi);
         Database.query(querystring, (error, results, fields) => {
