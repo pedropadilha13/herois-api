@@ -17,7 +17,11 @@ router.get('/', function(req, res, next) {
 
 router.get('/:id', function(req, res, next) {
     Database.query(`SELECT * FROM Heroi WHERE id = ${req.params.id}`, (error, results, fields) => {
-        
+        if (error) {
+            res.send(error);
+        } else {
+            res.json(results);
+        }
     });
 });
 
