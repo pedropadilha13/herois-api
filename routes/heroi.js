@@ -17,11 +17,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/:id', function(req, res, next) {
     Database.query(`SELECT * FROM Heroi WHERE id = ${req.params.id}`, (error, results, fields) => {
-        if (error) {
-            res.send(error);
-        } else {
-            res.json(results);
-        }
+        
     });
 });
 
@@ -44,12 +40,27 @@ router.post('/', (req, res, next) => {
 router.put('/', (req, res, next) => {
     var heroi = req.body;
     if (!heroi.id) {
-        res.status(400).json({"error": "Cannot update row without id!"});
+        res.status(400).json({"error": "Cannot update row without id"});
     } else if (!heroi.nome && !heroi.nacionalidade && heroi.nome !== "" && heroi.nacionalidade !== "") {
-        res.status(400).send({"error": "Invalid values for nome and/or nacionalidade"});
+        res.status(400).json({"error": "Invalid values for nome and/or nacionalidade"});
     } else {
         var querystring = buildQS(heroi);
         Database.query(querystring, (error, results, fields) => {
+            if (error) {
+                res.send(error);
+            } else {
+                res.send(results);
+            }
+        });
+    }
+});
+
+router.delete('/',(req, res, next) => {
+    var id = req.body.id;
+    if (!id) {
+        res.json({"error": "Cannot delete without id"});
+    } else {
+        Database.query(`DELETE FROM Heroi WHERE id = ${id}`,(error, results, fields) => {
             if (error) {
                 res.send(error);
             } else {
