@@ -5,6 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var heroiRouter = require('./routes/heroi');
+var indexRouter = require('./routes/index');
+var poderRouter = require('./routes/poder');
+var nacionalidadeRouter = require('./routes/nacionalidade');
 
 var app = express();
 
@@ -17,7 +20,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/index', indexRouter);
+app.use('/', indexRouter);
 app.use('/heroi', heroiRouter);
+app.use('/poder', poderRouter);
+app.use('/nacionalidade', nacionalidadeRouter);
 
 app.use(function(req, res, next) {
   next(createError(404));

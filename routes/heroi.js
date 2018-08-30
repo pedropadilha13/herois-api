@@ -1,10 +1,11 @@
 'use strict';
 var Database = require('../Database');
+var isNull = require('../public/javascripts/script').isNull;
 
 var express = require('express');
 var router = express.Router();
 
-router.get('/', function(req, res, next) {
+router.get('/', (req, res, next) => {
     //res.json(["Please specify id"]);
     Database.query('SELECT * FROM Heroi', (error, results, fields) => {
         if (error) {
@@ -15,7 +16,7 @@ router.get('/', function(req, res, next) {
     });
 });
 
-router.get('/:id', function(req, res, next) {
+router.get('/:id', (req, res, next) => {
     Database.query(`SELECT * FROM Heroi WHERE id = ${req.params.id}`, (error, results, fields) => {
         if (error) {
             res.send(error);
@@ -27,7 +28,7 @@ router.get('/:id', function(req, res, next) {
 
 router.post('/', (req, res, next) => {
     var heroi = req.body;
-    if (!heroi.nome || !heroi.nacionalidade) {
+    if (isNull(heroi.nome || isNull(heroi.nacionalidade))) {
         res.json({error: "Fields 'nome' and 'nacionalidade' cannot be set to null!"});
     } else {
         var querystring = `INSERT INTO Heroi (nome, nacionalidade, data_nasc) VALUES ('${heroi.nome}', '${heroi.nacionalidade}', '${heroi.data_nasc}')`;
@@ -43,9 +44,9 @@ router.post('/', (req, res, next) => {
 
 router.put('/', (req, res, next) => {
     var heroi = req.body;
-    if (!heroi.id) {
+    if (isNull(heroi.id)) {
         res.status(400).json({error: "Cannot update row without id"});
-    } else if (!heroi.nome && !heroi.nacionalidade && heroi.nome !== "" && heroi.nacionalidade !== "") {
+    } else if (isNull(heroi.nome) || isNull(heroi.nacionalidade)) {
         res.status(400).json({error: "Invalid values for nome and/or nacionalidade"});
     } else {
         var querystring = buildQS(heroi);
@@ -61,7 +62,7 @@ router.put('/', (req, res, next) => {
 
 router.delete('/',(req, res, next) => {
     var id = req.body.id;
-    if (!id) {
+    if (isNull(id)) {
         res.json({"error": "Cannot delete without id"});
     } else {
         Database.query(`DELETE FROM Heroi WHERE id = ${id}`,(error, results, fields) => {
@@ -77,8 +78,8 @@ router.delete('/',(req, res, next) => {
 function buildQS(heroi) {
 
     var idOk = heroi.id;
-    var nomeOk = heroi.nome && heroi.nome !== "";
-    var nacionalidadeOk = heroi.nacionalidade && heroi.nacionalidade !== "";
+    var nomeOk = !isNull(heroi.nome);
+    var nacionalidadeOk = !isNull(heroi.nacionalidade);
     var data_nasc = heroi.data_nasc;
     var querystring;
 
