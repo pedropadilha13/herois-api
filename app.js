@@ -8,6 +8,7 @@ var heroiRouter = require('./routes/heroi');
 var indexRouter = require('./routes/index');
 var poderRouter = require('./routes/poder');
 var nacionalidadeRouter = require('./routes/nacionalidade');
+var listaPoderRouter = require('./routes/listaPoder');
 
 var app = express();
 
@@ -25,6 +26,7 @@ app.use('/', indexRouter);
 app.use('/heroi', heroiRouter);
 app.use('/poder', poderRouter);
 app.use('/nacionalidade', nacionalidadeRouter);
+app.use('/listapoder', listaPoderRouter);
 
 app.use(function(req, res, next) {
   next(createError(404));
