@@ -17,7 +17,7 @@ router.get('/', (req, res, next) => {
 
 router.get('/heroi/:id', (req, res, next) => {
     var id = req.params.id;
-    if(!isNaN(Number(id))) {
+    if(!isNaN(parseInt(id))) {
         Database.query(`SELECT Heroi.nome AS Nome, Poder.titulo as Poder
                         FROM Heroi
                         INNER JOIN Lista_Poder ON Heroi.id = Lista_Poder.id_heroi
@@ -37,7 +37,7 @@ router.get('/heroi/:id', (req, res, next) => {
 
 router.get('/poder/:id', (req, res, next) => {
     var id = req.params.id;
-    if(!isNaN(Number(id))) {
+    if(!isNaN(parseInt(id))) {
         Database.query(`SELECT Heroi.nome AS Nome, Poder.titulo as Poder
                         FROM Heroi
                         INNER JOIN Lista_Poder ON Heroi.id = Lista_Poder.id_heroi
